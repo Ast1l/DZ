@@ -5,124 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест ЗИ: Урок 1–2</title>
     <style>
-        body {
-            background: #000;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(10,10,10,0.95);
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #0f0;
-            box-shadow: 0 0 30px #0f0;
-        }
-        h1 {
-            text-align: center;
-            color: #0f0;
-            text-shadow: 0 0 20px #0f0;
-            font-size: 2.5em;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { text-shadow: 0 0 20px #0f0; }
-            50% { text-shadow: 0 0 40px #0f0, 0 0 60px #0f0; }
-            100% { text-shadow: 0 0 20px #0f0; }
-        }
-        .timer {
-            text-align: center;
-            font-size: 1.8em;
-            margin: 20px 0;
-            color: #0f0;
-            text-shadow: 0 0 10px #0f0;
-        }
-        .progress {
-            text-align: center;
-            margin: 15px 0;
-            font-size: 1.2em;
-        }
-        .question-block {
-            background: #111;
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border: 1px solid #0f0;
-            min-height: 300px;
-        }
-        .options label {
-            display: block;
-            margin: 15px 0;
-            padding: 14px;
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .options label:hover {
-            background: #003300;
-            border-color: #0f0;
-        }
-        .options input[type="radio"] {
-            margin-right: 10px;
-        }
-        .selected {
-            background: #004400 !important;
-            border-color: #0f0 !important;
-        }
-        .wrong {
-            background: #440000 !important;
-            border-color: #f00 !important;
-        }
-        .nav-buttons {
-            text-align: center;
-            margin: 30px 0;
-        }
-        button {
-            background: #0f0;
-            color: #000;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 0 10px;
-            box-shadow: 0 0 20px #0f0;
-            font-weight: bold;
-        }
-        button:hover:not(:disabled) { background: #00ff00; }
-        button:disabled { background: #003300; cursor: not-allowed; opacity: 0.6; }
-        .result {
-            font-size: 2em;
-            text-align: center;
-            margin: 40px 0;
-            padding: 30px;
-            border: 2px solid #0f0;
-            border-radius: 15px;
-            animation: pulse 3s infinite;
-        }
-        input#name {
-            width: 100%;
-            padding: 15px;
-            background: #000;
-            border: 1px solid #0f0;
-            color: #0f0;
-            font-size: 1.3em;
-            text-align: center;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #0f0;
-            font-size: 1.2em;
-        }
+        body {background:#000;color:#0f0;font-family:'Courier New',monospace;margin:0;padding:20px;line-height:1.6;}
+        .container {max-width:900px;margin:0 auto;background:rgba(10,10,10,0.95);padding:30px;border-radius:15px;border:2px solid #0f0;box-shadow:0 0 30px #0f0;}
+        h1 {text-align:center;color:#0f0;text-shadow:0 0 20px #0f0;font-size:2.5em;animation:pulse 2s infinite;}
+        @keyframes pulse {0%{text-shadow:0 0 20px #0f0;}50%{text-shadow:0 0 40px #0f0,0 0 60px #0f0;}100%{text-shadow:0 0 20px #0f0;}}
+        .timer {text-align:center;font-size:1.8em;margin:20px 0;text-shadow:0 0 10px #0f0;}
+        .progress {text-align:center;margin:15px 0;font-size:1.2em;}
+        .question-block {background:#111;padding:25px;margin:20px 0;border-radius:10px;border:1px solid #0f0;min-height:300px;}
+        .options label {display:block;margin:15px 0;padding:14px;background:#000;border:1px solid #333;border-radius:8px;cursor:pointer;transition:all 0.3s;}
+        .options label:hover {background:#003300;border-color:#0f0;}
+        .options input[type="radio"] {margin-right:10px;}
+        .selected-correct {background:#004400 !important;border-color:#0f0 !important;}
+        .selected-wrong {background:#440000 !important;border-color:#f00 !important;}
+        .nav-buttons {text-align:center;margin:30px 0;}
+        button {background:#0f0;color:#000;border:none;padding:14px 28px;font-size:1.2em;cursor:pointer;border-radius:5px;margin:0 10px;box-shadow:0 0 20px #0f0;font-weight:bold;}
+        button:hover:not(:disabled) {background:#00ff00;}
+        button:disabled {background:#003300;cursor:not-allowed;opacity:0.6;}
+        .result {font-size:2em;text-align:center;margin:40px 0;padding:30px;border:2px solid #0f0;border-radius:15px;animation:pulse 3s infinite;}
+        input#name {width:100%;padding:15px;background:#000;border:1px solid #0f0;color:#0f0;font-size:1.3em;text-align:center;border-radius:8px;margin:20px 0;}
+        footer {text-align:center;margin-top:50px;color:#0f0;font-size:1.2em;}
     </style>
 </head>
 <body>
@@ -131,26 +32,29 @@
         <div class="timer" id="timer">10:00</div>
         <div class="progress" id="progress"></div>
 
+        <!-- Экран ввода ФИО -->
         <div id="fioScreen">
-            <h2 style="text-align:center;">Введите ФИО</h2>
+            <h2 style="text-align:center;">Введите ваши ФИО</h2>
             <input type="text" id="name" placeholder="Иванов Иван Иванович" autocomplete="off">
             <div class="nav-buttons">
                 <button onclick="startQuiz()">Начать тест</button>
             </div>
         </div>
 
+        <!-- Экран теста -->
         <div id="quizScreen" style="display:none;">
             <div class="question-block" id="questionContainer"></div>
-            
             <div class="nav-buttons">
                 <button id="prevBtn" onclick="prevQuestion()" disabled>Назад</button>
                 <button id="nextBtn" onclick="nextQuestion()">Вперёд</button>
             </div>
         </div>
 
+        <!-- Результат -->
         <div id="resultScreen" class="result" style="display:none;">
-            <h2 id="finalText"></h2>
-            <p id="scoreText"></p>
+            <h2 id="finalName"></h2>
+            <h2 id="finalText">Тест завершён!</h2>
+            <p id="scoreText" style="font-size:1.8em;"></p>
             <button onclick="location.reload()">Пройти заново</button>
         </div>
     </div>
@@ -166,40 +70,37 @@
             {q: "DLP-система предназначена для:", options: ["Предотвращения утечек конфиденциальной информации", "Защиты от DDoS", "Обнаружения вирусов", "Шифрования дисков"], correct: 0},
             {q: "SIEM — это:", options: ["Система управления событиями и инцидентами безопасности", "Система идентификации и мониторинга", "Серверная инфраструктура", "Система информационной безопасности"], correct: 0},
             {q: "VPN — это:", options: ["Виртуальная частная сеть", "Внешняя платёжная сеть", "Вирусная защита сети", "Виртуальный прокси сервер"], correct: 0},
-            {q: "IPsec работает на каком уровне модели OSI?", options: ["Сетевом (3)", "Канальном (2)", "Транспортном (4)", "Прикладном (7)"], correct: 0},
             {q: "WAF — это:", options: ["Межсетевой экран веб-приложений", "Веб-антивирус фильтр", "Система аутентификации веб", "Шифрование веб-трафика"], correct: 0},
             {q: "Honeypot — это:", options: ["Ловушка для злоумышленников", "Система сбора логов", "Антивирусная база", "Резервный сервер"], correct: 0},
-            // Добавь остальные вопросы в таком же формате (всего должно быть минимум 30–40, чтобы не повторялись)
-            // Я добавил только 10 для примера, остальные допиши сам по аналогии
-            {q: "Какой порт по умолчанию у HTTPS?", options: ["443", "80", "22", "3389"], correct: 0},
             {q: "Zero Trust — это принцип:", options: ["«Никому не доверяй, всегда проверяй»", "«Доверяй, но проверяй»", "«Полное доверие внутри сети»", "«Доверие по IP-адресу»"], correct: 0},
+            {q: "Какой порт по умолчанию у HTTPS?", options: ["443", "80", "22", "3389"], correct: 0},
             {q: "DMZ — это:", options: ["Демилитаризованная зона", "Зона максимальной защиты", "Домашняя сеть", "Дата-центр"], correct: 0},
-            {q: "Что делает анти-DDoS система?", options: ["Обнаруживает и блокирует распределённые атаки", "Лечит вирусы", "Шифрует трафик", "Создаёт резервные копии"], correct: 0},
-            {q: "NAC — это:", options: ["Система контроля доступа к сети", "Сетевой антивирус", "Контроллер домена", "Система мониторинга"], correct: 0}
+            {q: "NAC — это:", options: ["Система контроля доступа к сети", "Сетевой антивирус", "Контроллер домена", "Система мониторинга"], correct: 0},
+            {q: "IPsec работает на каком уровне модели OSI?", options: ["Сетевом (3)", "Канальном (2)", "Транспортном (4)", "Прикладном (7)"], correct: 0},
+            {q: "Что делает анти-DDoS система?", options: ["Обнаруживает и блокирует распределённые атаки", "Лечит вирусы", "Шифрует трафик", "Создаёт резервные копии"], correct: 0}
+            // Добавь остальные вопросы сам — чем больше, тем лучше!
         ];
 
         let selectedQuestions = [];
         let currentQuestion = 0;
-        let answers = new Array(10).fill(null); // хранит индексы выбранных ответов
+        let answers = new Array(10).fill(null); // индекс выбранного ответа или null
         let userName = "";
         let timerInterval;
-        let timeLeft = 600; // 10 минут
+        let timeLeft = 600; // 10 минут = 600 сек
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
-            return array;
         }
 
         function startTimer() {
             timerInterval = setInterval(() => {
                 timeLeft--;
-                const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-                const secs = (timeLeft % 60).toString().padStart(2, '0');
+                const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+                const secs = String(timeLeft % 60).padStart(2, '0');
                 document.getElementById('timer').textContent = `${mins}:${secs}`;
-
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     endQuiz(true);
@@ -210,18 +111,20 @@
         function startQuiz() {
             userName = document.getElementById('name').value.trim();
             if (!userName) {
-                alert("Введите ФИО!");
+                alert("Пожалуйста, введите ФИО!");
                 return;
             }
 
             // Выбираем 10 случайных вопросов
-            selectedQuestions = shuffle([...questions]).slice(0, 10);
+            const shuffled = [...questions];
+            shuffle(shuffled);
+            selectedQuestions = shuffled.slice(0, 10);
 
-            // Перемешиваем варианты в каждом вопросе
+            // Перемешиваем варианты ответов
             selectedQuestions.forEach(q => {
-                const opts = q.options.map((opt, i) => ({text: opt, correct: i === q.correct}));
-                shuffle(opts);
-                q.shuffled = opts;
+                const mixed = q.options.map((text, i) => ({text, correct: i === q.correct}));
+                shuffle(mixed);
+                q.shuffled = mixed;
             });
 
             document.getElementById('fioScreen').style.display = 'none';
@@ -234,7 +137,7 @@
             currentQuestion = n;
             const q = selectedQuestions[n];
             const container = document.getElementById('questionContainer');
-            
+
             document.getElementById('progress').textContent = `Вопрос ${n + 1} из 10`;
 
             container.innerHTML = `
@@ -242,31 +145,42 @@
                 <div class="options">
                     ${q.shuffled.map((opt, i) => `
                         <label>
-                            <input type="radio" name="q${n}" value="${i}" ${answers[n] !== null ? (answers[n] === i ? 'checked' : '') : ''} ${answers[n] !== null ? 'disabled' : ''}>
+                            <input type="radio" name="answer" value="${i}" 
+                                ${answers[n] !== null ? (answers[n] === i ? 'checked' : 'disabled') : ''}>
                             ${opt.text}
                         </label>
                     `).join('')}
                 </div>
             `;
 
-            // Обработчик выбора
-            container.querySelectorAll('input[type=radio]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    answers[n] = parseInt(this.value);
-                    // Подсвечиваем выбранный
-                    container.querySelectorAll('label').forEach((lbl, idx) => {
-                        lbl.classList.remove('selected', 'wrong');
-                        if (idx === answers[n]) {
-                            const isCorrect = selectedQuestions[n].shuffled[idx].correct;
-                            lbl.classList.add(isCorrect ? 'selected' : 'wrong');
-                        }
+            // Если уже отвечал — показываем результат (зелёный/красный)
+            if (answers[n] !== null) {
+                const labels = container.querySelectorAll('label');
+                labels.forEach((lbl, i) => {
+                    lbl.querySelector('input').disabled = true;
+                    if (i === answers[n]) {
+                        const isCorrect = q.shuffled[i].correct;
+                        lbl.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+                    }
+                });
+            } else {
+                // Новый вопрос — можно выбрать только один раз
+                container.querySelectorAll('input[type=radio]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        answers[n] = parseInt(this.value);
+                        // Блокируем все радиокнопки сразу после выбора
+                        container.querySelectorAll('input[type=radio]').forEach(r => r.disabled = true);
+                        // Подсвечиваем выбранный (но пока не показываем правильный!)
+                        this.parentElement.classList.add(
+                            q.shuffled[answers[n]].correct ? 'selected-correct' : 'selected-wrong'
+                        );
                     });
                 });
-            });
+            }
 
-            // Кнопки
+            // Кнопки навигации
             document.getElementById('prevBtn').disabled = n === 0;
-            document.getElementById('nextBtn').textContent = n === 9 ? 'Завершить' : 'Вперёд';
+            document.getElementById('nextBtn').textContent = n === 9 ? 'Завершить тест' : 'Вперёд';
         }
 
         function nextQuestion() {
@@ -293,11 +207,14 @@
                 if (ans !== null && selectedQuestions[i].shuffled[ans].correct) correct++;
             });
 
-            const resultText = timeout ? "ВРЕМЯ ВЫШЛО!" : "Тест завершён!";
-            document.getElementById('finalText').textContent = `${userName ? userName + ', ' : ''}${resultText}`;
+            document.getElementById('finalName').textContent = userName;
+            document.getElementById('finalText').textContent = timeout ? "ВРЕМЯ ВЫШЛО!" : "Тест завершён!";
             document.getElementById('scoreText').innerHTML = `
-                <strong style="font-size:1.5em;">${correct} из 10 правильных ответов</strong><br><br>
-                ${correct >= 9 ? "🔥 Гениально!" : correct >= 7 ? "Отлично!" : correct >= 5 ? "Неплохо!" : "Повтори материал 😅"}
+                <strong>${correct} из 10</strong> правильных ответов<br><br>
+                ${correct >= 9 ? "Гениально! 🔥" : 
+                  correct >= 8 ? "Отлично!" : 
+                  correct >= 6 ? "Хорошо!" : 
+                  correct >= 5 ? "Неплохо" : "Нужно повторить материал 😅"}
             `;
         }
     </script>
