@@ -1,281 +1,305 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Тест по безопасности</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    padding: 20px;
-}
-.container {
-    max-width: 700px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px 5px;
-    font-size: 16px;
-}
-.hidden { display: none; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест ЗИ: Урок 1–2</title>
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(10,10,10,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 30px #0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #0f0;
+            text-shadow: 0 0 20px #0f0;
+            font-size: 2.5em;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { text-shadow: 0 0 20px #0f0; }
+            50% { text-shadow: 0 0 40px #0f0, 0 0 60px #0f0; }
+            100% { text-shadow: 0 0 20px #0f0; }
+        }
+        .timer {
+            text-align: center;
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+        .progress {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+        .question-block {
+            background: #111;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #0f0;
+            min-height: 300px;
+        }
+        .options label {
+            display: block;
+            margin: 15px 0;
+            padding: 14px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .options label:hover {
+            background: #003300;
+            border-color: #0f0;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .selected {
+            background: #004400 !important;
+            border-color: #0f0 !important;
+        }
+        .wrong {
+            background: #440000 !important;
+            border-color: #f00 !important;
+        }
+        .nav-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 10px;
+            box-shadow: 0 0 20px #0f0;
+            font-weight: bold;
+        }
+        button:hover:not(:disabled) { background: #00ff00; }
+        button:disabled { background: #003300; cursor: not-allowed; opacity: 0.6; }
+        .result {
+            font-size: 2em;
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            border: 2px solid #0f0;
+            border-radius: 15px;
+            animation: pulse 3s infinite;
+        }
+        input#name {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            font-size: 1.3em;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #0f0;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>ТЕСТ ПО ЗИ: УРОК 1–2</h1>
+        <div class="timer" id="timer">10:00</div>
+        <div class="progress" id="progress"></div>
 
-<div class="container">
+        <div id="fioScreen">
+            <h2 style="text-align:center;">Введите ФИО</h2>
+            <input type="text" id="name" placeholder="Иванов Иван Иванович" autocomplete="off">
+            <div class="nav-buttons">
+                <button onclick="startQuiz()">Начать тест</button>
+            </div>
+        </div>
 
-<div id="startScreen">
-    <h2>Введите ваше ФИО:</h2>
-    <input id="fio" type="text" style="width:100%; padding:10px; font-size:16px;">
-    <button onclick="startTest()">Начать тест</button>
-</div>
+        <div id="quizScreen" style="display:none;">
+            <div class="question-block" id="questionContainer"></div>
+            
+            <div class="nav-buttons">
+                <button id="prevBtn" onclick="prevQuestion()" disabled>Назад</button>
+                <button id="nextBtn" onclick="nextQuestion()">Вперёд</button>
+            </div>
+        </div>
 
-<div id="testScreen" class="hidden">
-    <h3 id="timer">Осталось времени: 10:00</h3>
-    <h2 id="questionText"></h2>
-    <div id="answers"></div>
-    <button onclick="prevQuestion()">Назад</button>
-    <button onclick="nextQuestion()">Далее</button>
-</div>
+        <div id="resultScreen" class="result" style="display:none;">
+            <h2 id="finalText"></h2>
+            <p id="scoreText"></p>
+            <button onclick="location.reload()">Пройти заново</button>
+        </div>
+    </div>
 
-<div id="resultScreen" class="hidden">
-    <h2 id="resultText"></h2>
-</div>
+    <footer>Автор: Стиль Андрей | 2025</footer>
 
-</div>
+    <script>
+        const questions = [
+            {q: "Что такое ПАС ЗИ?", options: ["Программно-аппаратный комплекс защиты информации", "Программа автоматизированной системы защиты", "Пассивная защита информации", "Протокол аутентификации сети"], correct: 0},
+            {q: "Основная задача межсетевого экрана (Firewall):", options: ["Контроль и фильтрация трафика между сетями", "Шифрование данных", "Резервное копирование", "Ускорение интернета"], correct: 0},
+            {q: "IDS — это:", options: ["Система обнаружения вторжений", "Система идентификации документов", "Интернет-доступ сервис", "Интегрированная система данных"], correct: 0},
+            {q: "IPS — это:", options: ["Система предотвращения вторжений", "Интернет-провайдер сервис", "Система защиты паролей", "Интегрированная платформа безопасности"], correct: 0},
+            {q: "DLP-система предназначена для:", options: ["Предотвращения утечек конфиденциальной информации", "Защиты от DDoS", "Обнаружения вирусов", "Шифрования дисков"], correct: 0},
+            {q: "SIEM — это:", options: ["Система управления событиями и инцидентами безопасности", "Система идентификации и мониторинга", "Серверная инфраструктура", "Система информационной безопасности"], correct: 0},
+            {q: "VPN — это:", options: ["Виртуальная частная сеть", "Внешняя платёжная сеть", "Вирусная защита сети", "Виртуальный прокси сервер"], correct: 0},
+            {q: "IPsec работает на каком уровне модели OSI?", options: ["Сетевом (3)", "Канальном (2)", "Транспортном (4)", "Прикладном (7)"], correct: 0},
+            {q: "WAF — это:", options: ["Межсетевой экран веб-приложений", "Веб-антивирус фильтр", "Система аутентификации веб", "Шифрование веб-трафика"], correct: 0},
+            {q: "Honeypot — это:", options: ["Ловушка для злоумышленников", "Система сбора логов", "Антивирусная база", "Резервный сервер"], correct: 0},
+            // Добавь остальные вопросы в таком же формате (всего должно быть минимум 30–40, чтобы не повторялись)
+            // Я добавил только 10 для примера, остальные допиши сам по аналогии
+            {q: "Какой порт по умолчанию у HTTPS?", options: ["443", "80", "22", "3389"], correct: 0},
+            {q: "Zero Trust — это принцип:", options: ["«Никому не доверяй, всегда проверяй»", "«Доверяй, но проверяй»", "«Полное доверие внутри сети»", "«Доверие по IP-адресу»"], correct: 0},
+            {q: "DMZ — это:", options: ["Демилитаризованная зона", "Зона максимальной защиты", "Домашняя сеть", "Дата-центр"], correct: 0},
+            {q: "Что делает анти-DDoS система?", options: ["Обнаруживает и блокирует распределённые атаки", "Лечит вирусы", "Шифрует трафик", "Создаёт резервные копии"], correct: 0},
+            {q: "NAC — это:", options: ["Система контроля доступа к сети", "Сетевой антивирус", "Контроллер домена", "Система мониторинга"], correct: 0}
+        ];
 
-<script>
-// ============ ТАЙМЕР ===============
-let timeLeft = 600;
-let timerInterval;
+        let selectedQuestions = [];
+        let currentQuestion = 0;
+        let answers = new Array(10).fill(null); // хранит индексы выбранных ответов
+        let userName = "";
+        let timerInterval;
+        let timeLeft = 600; // 10 минут
 
-function formatTime(sec) {
-    let m = Math.floor(sec / 60);
-    let s = sec % 60;
-    return `${m}:${s < 10 ? '0'+s : s}`;
-}
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-function startTimer() {
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById("timer").textContent = "Осталось времени: " + formatTime(timeLeft);
-        if (timeLeft <= 0) finishTest();
-    }, 1000);
-}
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                const secs = (timeLeft % 60).toString().padStart(2, '0');
+                document.getElementById('timer').textContent = `${mins}:${secs}`;
 
-// ============ ВОПРОСЫ ===============
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz(true);
+                }
+            }, 1000);
+        }
 
-let questions = [
-    {
-        q: "Что такое патч?",
-        correct: "Исправление ошибки или уязвимости",
-        wrong: [
-            "Файл, ускоряющий работу видеокарты",
-            "Антивирусная база данных",
-            "Программа для изменения интерфейса"
-        ]
-    },
-    {
-        q: "Зачем устанавливать обновления безопасности?",
-        correct: "Для устранения уязвимостей",
-        wrong: [
-            "Чтобы изменить тему оформления",
-            "Для ускорения загрузки игр",
-            "Чтобы удалить драйверы"
-        ]
-    },
-    {
-        q: "Какой пароль считается надежным?",
-        correct: "Содержащий буквы, цифры и спецсимволы",
-        wrong: [
-            "Только из цифр",
-            "Имя пользователя",
-            "Повторяющиеся символы типа 111111"
-        ]
-    },
-    {
-        q: "Что такое фишинг?",
-        correct: "Мошенническая попытка получить данные",
-        wrong: [
-            "Тестирование скорости интернета",
-            "Метод оптимизации системы",
-            "Проверка памяти компьютера"
-        ]
-    },
-    {
-        q: "Что такое брандмауэр?",
-        correct: "Система фильтрации сетевого трафика",
-        wrong: [
-            "Программа для удаления вирусов",
-            "Хранилище логинов",
-            "Облачное резервирование"
-        ]
-    },
-    {
-        q: "Что такое двухфакторная аутентификация?",
-        correct: "Подтверждение входа двумя способами",
-        wrong: [
-            "Резервное копирование данных",
-            "Сканирование устройства",
-            "Автогенерация пароля"
-        ]
-    },
-    {
-        q: "Как распознать вредоносное письмо?",
-        correct: "Странный адрес, ссылки, ошибки",
-        wrong: [
-            "Письмо на вашем языке",
-            "Короткий текст письма",
-            "Есть вложение в формате PDF"
-        ]
-    },
-    {
-        q: "Что нужно делать при подозрении на вирус?",
-        correct: "Запустить антивирусную проверку",
-        wrong: [
-            "Удалить случайные файлы",
-            "Отключить интернет",
-            "Перезагрузить роутер"
-        ]
-    },
-    {
-        q: "Что такое резервное копирование?",
-        correct: "Создание копии данных",
-        wrong: [
-            "Удаление старых файлов",
-            "Объединение папок",
-            "Оптимизация диска"
-        ]
-    },
-    {
-        q: "Что делает антивирус?",
-        correct: "Обнаруживает и удаляет вредоносное ПО",
-        wrong: [
-            "Ускоряет работу процессора",
-            "Увеличивает объём оперативной памяти",
-            "Создаёт новые драйверы"
-        ]
-    },
-    {
-        q: "Что такое вредоносное ПО?",
-        correct: "ПО, созданное для нанесения вреда",
-        wrong: [
-            "ПО для оптимизации игр",
-            "Стандартные системные утилиты",
-            "ПО для резервного копирования"
-        ]
-    },
-    {
-        q: "Что нельзя сообщать незнакомым людям?",
-        correct: "Пароли и коды подтверждения",
-        wrong: [
-            "Модель телефона",
-            "Имя домашнего питомца",
-            "Любимый цвет"
-        ]
-    },
-    {
-        q: "Что такое VPN?",
-        correct: "Защищённое соединение через интернет",
-        wrong: [
-            "Антивирусный модуль",
-            "Программа для обновлений",
-            "Менеджер файлов"
-        ]
-    }
-];
-// ======== ПЕРЕМЕШИВАНИЕ ========
-function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
+        function startQuiz() {
+            userName = document.getElementById('name').value.trim();
+            if (!userName) {
+                alert("Введите ФИО!");
+                return;
+            }
 
-// ======== СОЗДАНИЕ ПОЛНОГО СПИСКА ========
-let shuffledQuestions = questions.map(q => {
-    let opts = shuffle([q.correct, ...q.wrong]);
-    return {
-        q: q.q,
-        correct: q.correct,
-        answers: opts
-    };
-});
+            // Выбираем 10 случайных вопросов
+            selectedQuestions = shuffle([...questions]).slice(0, 10);
 
-let current = 0;
-let userAnswers = Array(shuffledQuestions.length).fill(null);
+            // Перемешиваем варианты в каждом вопросе
+            selectedQuestions.forEach(q => {
+                const opts = q.options.map((opt, i) => ({text: opt, correct: i === q.correct}));
+                shuffle(opts);
+                q.shuffled = opts;
+            });
 
-// ======== ЗАПУСК ТЕСТА ========
-function startTest() {
-    if (!document.getElementById("fio").value.trim()) {
-        alert("Введите ФИО!");
-        return;
-    }
-    document.getElementById("startScreen").classList.add("hidden");
-    document.getElementById("testScreen").classList.remove("hidden");
-    startTimer();
-    loadQuestion();
-}
+            document.getElementById('fioScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            startTimer();
+            showQuestion(0);
+        }
 
-function loadQuestion() {
-    let q = shuffledQuestions[current];
-    document.getElementById("questionText").textContent = (current + 1) + ". " + q.q;
+        function showQuestion(n) {
+            currentQuestion = n;
+            const q = selectedQuestions[n];
+            const container = document.getElementById('questionContainer');
+            
+            document.getElementById('progress').textContent = `Вопрос ${n + 1} из 10`;
 
-    let answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = "";
+            container.innerHTML = `
+                <h2>${n + 1}. ${q.q}</h2>
+                <div class="options">
+                    ${q.shuffled.map((opt, i) => `
+                        <label>
+                            <input type="radio" name="q${n}" value="${i}" ${answers[n] !== null ? (answers[n] === i ? 'checked' : '') : ''} ${answers[n] !== null ? 'disabled' : ''}>
+                            ${opt.text}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
 
-    q.answers.forEach(ans => {
-        let btn = document.createElement("button");
-        btn.textContent = ans;
-        btn.style.display = "block";
-        btn.style.width = "100%";
-        btn.onclick = () => selectAnswer(ans);
-        if (userAnswers[current] !== null) btn.disabled = true;
-        answersDiv.appendChild(btn);
-    });
-}
+            // Обработчик выбора
+            container.querySelectorAll('input[type=radio]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    answers[n] = parseInt(this.value);
+                    // Подсвечиваем выбранный
+                    container.querySelectorAll('label').forEach((lbl, idx) => {
+                        lbl.classList.remove('selected', 'wrong');
+                        if (idx === answers[n]) {
+                            const isCorrect = selectedQuestions[n].shuffled[idx].correct;
+                            lbl.classList.add(isCorrect ? 'selected' : 'wrong');
+                        }
+                    });
+                });
+            });
 
-function selectAnswer(ans) {
-    if (userAnswers[current] !== null) return;
-    userAnswers[current] = ans;
-    loadQuestion();
-}
+            // Кнопки
+            document.getElementById('prevBtn').disabled = n === 0;
+            document.getElementById('nextBtn').textContent = n === 9 ? 'Завершить' : 'Вперёд';
+        }
 
-function nextQuestion() {
-    if (current < shuffledQuestions.length - 1) {
-        current++;
-        loadQuestion();
-    } else {
-        finishTest();
-    }
-}
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                endQuiz();
+            }
+        }
 
-function prevQuestion() {
-    if (current > 0) {
-        current--;
-        loadQuestion();
-    }
-}
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
 
-// ======== ЗАВЕРШЕНИЕ ========
-function finishTest() {
-    clearInterval(timerInterval);
+        function endQuiz(timeout = false) {
+            clearInterval(timerInterval);
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
 
-    let score = 0;
-    shuffledQuestions.forEach((q, i) => {
-        if (userAnswers[i] === q.correct) score++;
-    });
+            let correct = 0;
+            answers.forEach((ans, i) => {
+                if (ans !== null && selectedQuestions[i].shuffled[ans].correct) correct++;
+            });
 
-    let grade = (score / shuffledQuestions.length) * 10;
-
-    document.getElementById("testScreen").classList.add("hidden");
-    document.getElementById("resultScreen").classList.remove("hidden");
-
-    document.getElementById("resultText").innerHTML =
-        "Ваш результат: <b>" + grade.toFixed(1) + "</b> из 10";
-}
-</script>
-
+            const resultText = timeout ? "ВРЕМЯ ВЫШЛО!" : "Тест завершён!";
+            document.getElementById('finalText').textContent = `${userName ? userName + ', ' : ''}${resultText}`;
+            document.getElementById('scoreText').innerHTML = `
+                <strong style="font-size:1.5em;">${correct} из 10 правильных ответов</strong><br><br>
+                ${correct >= 9 ? "🔥 Гениально!" : correct >= 7 ? "Отлично!" : correct >= 5 ? "Неплохо!" : "Повтори материал 😅"}
+            `;
+        }
+    </script>
 </body>
 </html>
